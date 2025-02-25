@@ -27,10 +27,10 @@ static void m_timer_callback(struct timer_list* t);
 DEFINE_TIMER(m_timer, m_timer_callback);
 
 
-static void m_timer_callback(strcut timer_list* t) {
+static void m_timer_callback(struct timer_list* t) {
     
     printk("processing timer callback\n");
-    mod_timer(&m_timer, jiffies_64 + msecs_to_jiffies(1000));
+    mod_timer(t, jiffies_64 + msecs_to_jiffies(1000));
     atomic64_inc(&dev1.counter);
 }
 
@@ -42,8 +42,11 @@ static int cdev_test_open(struct inode *inode, struct file *file) {
     printk("In cdev_test_open\n");
 
     m_timer.expires = jiffies_64 + msecs_to_jiffies(1000);
+    printk("set expires\n");
     add_timer(&m_timer);
+    printk("add timer\n");
     atomic64_set(&dev1.counter, 0);
+    printk("set counter\n");
 
     return 0;
 }
@@ -54,7 +57,7 @@ static ssize_t cdev_test_read (struct file *file, char __user * buf, size_t size
     struct device_help *dev_pri = (struct device_help *)file -> private_data;
 
     counter = atomic64_read(&dev_pri -> counter);
-    if(copy_to_user(buf, &counter, strlen(counter)) != 0) {
+    if(copy_to_user(buf, &counter, sizeof(counter)) != 0) {
         printk("copy_to_usr failure\n");
         return -1;
     }

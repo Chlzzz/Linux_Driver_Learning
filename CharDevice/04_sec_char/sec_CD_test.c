@@ -7,6 +7,7 @@
 int main(int argc, char **argv) {
     int fd = 0;
     unsigned int counter = 0;
+   
     // char buf1[32] = {0};
     // char buf2[32] = "hello!";
 
@@ -15,7 +16,6 @@ int main(int argc, char **argv) {
         perror("open node failure!\n");
         return fd;
     }
-
     // write(fd, buf2, sizeof(buf2));
     // if(fd < 0) {
     //     perror("write failure!\n");
@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
             perror("read failure!\n");
             return fd;
         }
-        printf("now, buf1 is : %s\n", counter);
+        printf("now, counter is : %d\n", counter);
         sleep(1);
     }
 
