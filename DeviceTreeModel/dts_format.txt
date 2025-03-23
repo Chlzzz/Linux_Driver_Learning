@@ -1,0 +1,15 @@
+reg属性：   描述地址信息，如寄存器地址
+其内容根据  #address-cell #size-cells 属性来判断
+eg：    #address-cell<1> #size-cells<1> 表示reg里有一个地址，一个长度
+
+
+model属性：     值是一个字符串，描述信息
+status属性：    与设备状态有关
+
+compatible属性：    用于与驱动匹配
+eg：    compatible = “aa", "bb",   会以aa先匹配， 没有再匹配bb 
+
+chosen 特殊节点， 必须在根节点下
+eg：     bootargs{} uboot给内核传递参数
+
+device_type属性：     值是一个字符串，描述节点信息, cpu memory
